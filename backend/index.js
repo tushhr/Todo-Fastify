@@ -1,6 +1,8 @@
 import Fastify from "fastify";
 import mongoose from "mongoose";
 
+import appRoutes from "./routes/index.js"
+
 const fastify = Fastify({ logger: true })
 
 try {
@@ -8,6 +10,8 @@ try {
 } catch(err) {
   console.log(err)
 }
+
+fastify.register(appRoutes)
 
 fastify.listen({ port: 5000 }, (err, address) => {
   if(err) {
