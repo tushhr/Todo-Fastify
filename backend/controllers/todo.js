@@ -33,9 +33,18 @@ const deleteTodoController = async (req, reply) => {
   reply.send("Deleted successfully")
 }
 
+const updateTodoOptsController = async (req, reply) => {
+  const { id } = req.params;
+  const { text, isCompleted } = req.body
+  await Note.findByIdAndUpdate(id, { text, isCompleted })
+
+  reply.send("Updated successfully")
+}
+
 export { 
   createTodoController,
   getTodosController,
   getTodoController,
-  deleteTodoController
+  deleteTodoController,
+  updateTodoOptsController
 }

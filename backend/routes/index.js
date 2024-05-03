@@ -2,7 +2,8 @@ import {
   createTodoController,
   getTodosController,
   getTodoController,
-  deleteTodoController
+  deleteTodoController,
+  updateTodoOptsController
 } from "../controllers/todo.js"
 
 const Todo = {
@@ -61,6 +62,24 @@ const deleteTodoOpts = {
   handler: deleteTodoController
 }
 
+const updateTodoOpts = {
+  schema: {
+    body: {
+      type: 'object',
+      required: [ 'text', 'isCompleted' ],
+      properties: {
+        text: { type: 'string' },
+        isCompleted: { type: 'string' }
+      }
+    },
+    additionalProperties: false,
+    response: {
+      200: Todo
+    }
+  },
+  handler: updateTodoOptsController
+}
+
 const appRoutes = (fastify, options, done) => {
   fastify.get('/', todosOpts)
 
@@ -69,6 +88,8 @@ const appRoutes = (fastify, options, done) => {
   fastify.get('/:id', todoOpts)
 
   fastify.delete('/:id', deleteTodoOpts)
+
+  fastify.put('/:id', updateTodoOpts)
 
   done()
 }
