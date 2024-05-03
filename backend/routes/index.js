@@ -1,7 +1,8 @@
 import {
   createTodoController,
   getTodosController,
-  getTodoController
+  getTodoController,
+  deleteTodoController
 } from "../controllers/todo.js"
 
 const Todo = {
@@ -51,12 +52,23 @@ const createTodoOpts = {
   handler: createTodoController
 }
 
+const deleteTodoOpts = {
+  schema: {
+    response: {
+      200: Todo
+    }
+  },
+  handler: deleteTodoController
+}
+
 const appRoutes = (fastify, options, done) => {
   fastify.get('/', todosOpts)
 
   fastify.post('/', createTodoOpts)
 
   fastify.get('/:id', todoOpts)
+
+  fastify.delete('/:id', deleteTodoOpts)
 
   done()
 }

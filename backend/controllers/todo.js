@@ -12,8 +12,9 @@ const getTodosController = async (req, reply) => {
 const getTodoController = async (req, reply) => {
   const { id } = req.params;
   const todo = await Note.findById(id)
-  
-  reply.send(todo)
+  if(todo) {
+    reply.send(todo)
+  }
 }
 
 const createTodoController = async (req, reply) => {
@@ -25,8 +26,16 @@ const createTodoController = async (req, reply) => {
   reply.code(201).send(newTodo)
 }
 
+const deleteTodoController = async (req, reply) => {
+  const { id } = req.params;
+  await Note.findByIdAndDelete(id)
+
+  reply.send("Deleted successfully")
+}
+
 export { 
   createTodoController,
   getTodosController,
-  getTodoController
+  getTodoController,
+  deleteTodoController
 }
